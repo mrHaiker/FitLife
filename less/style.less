@@ -1,0 +1,118 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,300,700,500);
+
+@blue: #3f7bff;
+
+body {
+  background: #ECECEC;
+  padding: 0;
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+}
+
+
+.boxSizing {
+  box-sizing: border-box;
+}
+
+// Header home page
+header {
+  height: 60px;
+  background-color: @blue;
+  border-bottom: 2px solid #204d74;
+  line-height: 60px;
+  color: #dedede;
+  z-index: 1;
+  nav {
+    div {
+      .boxSizing;
+    }
+    .circle {
+      margin: 10px 0;
+      height: 43px;
+      width: 43px;
+      border-radius: 50%;
+      background: #0156A0;
+      border: 2px solid #6EA4B3;
+      text-align: center;
+      line-height: 40px;
+    }
+    #profile {
+      float: left;
+    }
+    #menu {
+      float: right;
+    }
+  }
+}
+
+#authorization {
+  height: 100%;
+  width: 100%;
+  top: 0;
+  background: #fff;
+  opacity: .95;
+  position: absolute;
+  z-index: 2;
+  .container {
+    position: absolute;
+    height: 400px;
+    background: #E0E0E0;
+    .boxSizing;
+    box-shadow: 0 0 14px rgba(0,0,0,.3);
+    border: 1px solid #B9B9B9;
+    .btnGroup {
+      height: 50px;
+      .boxSizing;
+      border: 1px solid #B9B9B9;
+      line-height: 50px;
+      text-align: center;
+
+    }
+    .active {
+      border-bottom: none;
+    }
+    .enter {
+      height: 50px;
+      line-height: 50px;
+      width: 100%;
+      position: absolute;
+      bottom: 0;
+      background: #CCCAC8;
+      border: 1px solid rgba(0,0,0,0);
+
+      #enterBtn {
+        .boxSizing;
+        text-align: center;
+        font-weight: 600;
+        font-size: 18px;
+        border: 1px solid #9A9A9A;
+        background: #E0E0E0;
+      }
+    }
+    #contentAuthorization {
+      input.text {
+        height: 40px;
+        width: 100%;
+        background: none;
+        border: 1px solid #949494;
+        border-radius: 2px;
+        margin: 20px 0;
+        padding: 0 10px;
+        .boxSizing;
+        color: #101010;
+        font-size: 20px;
+      }
+      p {
+        input {
+          height: 20px;
+          width: 20px;
+          margin: 10px;
+        }
+      }
+    }
+  }
+  .more {
+    top: 50%;
+    margin-top: -200px;
+  }
+}
