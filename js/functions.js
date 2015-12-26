@@ -72,3 +72,14 @@ function valid(param, type) {
     }
     return true;
 }
+
+function loadPage () {
+    var hash = location.hash;
+
+    $('.view').remove();
+    if (hash == '') {
+        getDataAndPastInHtml('listItems', '#view');
+    } else {
+        getDataAndPastInHtml('listExercise', '#view');
+    }
+}

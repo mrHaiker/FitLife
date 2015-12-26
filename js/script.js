@@ -12,7 +12,7 @@ $(document).ready(function(){
         // необходимо спросить имя и создать первую запись
         getDataAndPastInHtml('whatName', 'body', setMarginForAuthorization);
     } else {
-        getDataAndPastInHtml('listItems', '#view');
+        loadPage();
         userName = JSON.parse(localStorage.getItem('UserData')).name;
         seyHello(userName);
     }
@@ -24,17 +24,17 @@ $(document).ready(function(){
         getDataAndPastInHtml('login', '#contentAuthorization');
     }
 
-    //$(document).click(function () {
-    //    var hash = location.hash;
-    //    if (hash == '') {
-    //        getDataAndPastInHtml('listItems', '#view');
-    //    }
-    //});
+    window.addEventListener('hashchange', function () {
+        setTimeout(function () {
+            loadPage ();
+        },500);
+    });
     //******************************** События ********************************//
     $(window).resize(function(){    // Применяет стиль при изминении высоты окна
         setMarginForAuthorization();
     });
 
+    // Проверка имени из поля ввода
     $(document).on('keyup', '#UserName', function () {
         var checking;
         var $btn = $('#setName');
@@ -47,7 +47,6 @@ $(document).ready(function(){
                 checking = true;
             }
         }
-
         if (checking == true) {
             $userName.addClass('valid');
             $btn.removeAttr('disabled');
@@ -88,7 +87,6 @@ $(document).ready(function(){
         setTimeout(function () {
             location.hash = $this.attr('id');
             $('#title').text($this.attr('alt')); //Изменения заголовка страницы
-            $('.main-group').remove();
         },500);
 
         $('body, html').animate({scrollTop: 0}, 400);
