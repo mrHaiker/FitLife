@@ -42,8 +42,15 @@ header {
     #menu {
       float: right;
     }
+    #title {
+      text-align: center;
+      color: #ffffff;
+    }
   }
 }
+
+//****************************** Authorization ****************************//
+//*************************************************************************//
 
 #authorization {
   height: 100%;
@@ -79,7 +86,6 @@ header {
       bottom: 0;
       background: #CCCAC8;
       border: 1px solid rgba(0,0,0,0);
-
       #enterBtn {
         .boxSizing;
         text-align: center;
@@ -87,10 +93,12 @@ header {
         font-size: 18px;
         border: 1px solid #9A9A9A;
         background: #E0E0E0;
+        height: 100%;
       }
     }
     #contentAuthorization {
-      input.text {
+      input.login,
+      input.reg{
         height: 40px;
         width: 100%;
         background: none;
@@ -100,7 +108,11 @@ header {
         padding: 0 10px;
         .boxSizing;
         color: #101010;
-        font-size: 20px;
+        font-size: 18px;
+      }
+      input.reg {
+        margin: 15px 0;
+
       }
       p {
         input {
@@ -115,4 +127,153 @@ header {
     top: 50%;
     margin-top: -200px;
   }
+}
+
+
+//******************************** Spinner ********************************//
+//*************************************************************************//
+
+.spinner {
+  position: absolute;
+  font-size: 30px;
+  color: #999;
+  top: 50%;
+  left: 50%;
+  margin-top: -15px;
+  margin-left: -15px;
+  z-index: 3;
+  display: none;
+}
+
+.visible {
+  display: block;
+}
+
+//******************************** WhatName *******************************//
+//*************************************************************************//
+
+#yourName {
+  height: 100%;
+  width: 100%;
+  top: 0;
+  background: #fff;
+  opacity: .85;
+  position: absolute;
+  z-index: 2;
+  .wrapper {
+    top: 50%;
+    height: 200px;
+    width: 100%;
+    margin-top: -100px;
+    position: absolute;
+    text-align: center;
+    h3 {
+      color: #444;
+    }
+    input {
+      display: block;
+      .boxSizing;
+      height: 35px;
+      border-radius: 2px;
+      font-size: 20px;
+      color: #444444;
+      padding: 0 3px;
+      border: 1px solid #999;
+      text-align: center;
+    }
+    input[type=submit] {
+      position: absolute;
+      bottom: 10px;
+      background: dodgerblue;
+      color: #fff;
+      border: 1px solid #23527c;
+    }
+    .disabled {
+      background: #777!important;
+      border: 1px solid #333!important;
+    }
+    .valid {
+      outline: none;
+      border: 1px solid forestgreen;
+    }
+    .invalid {
+      outline: none;
+      border: 1px solid red;
+    }
+    p#infoAboutName {
+      font-size: 14px;
+      display: inline-block;
+    }
+  }
+}
+
+//****************************** Hello Window *****************************//
+//*************************************************************************//
+
+.helloWindow {
+  position: absolute;
+  bottom: 10px;
+  height: 40px;
+  width: 80%;
+
+  margin-left: 10%;
+
+  background: #333;
+  color: #fff;
+  text-align: center;
+  line-height: 40px;
+  display: none;
+  .boxSizing;
+}
+
+//********************************* Section *******************************//
+//*************************************************************************//
+
+section {
+  .main-group {
+    list-style-type: none;
+    padding: 0 15px;
+    li {
+      height: 100px;
+      width: 100%;
+      background: #dedede;
+      margin-bottom: 15px;
+      position: relative;
+      box-shadow: 0 0 5px rgba(0,0,0,.4);
+      img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        font-size: 0;
+      }
+    }
+    .animatePlates {
+
+    }
+  }
+}
+
+#chest {
+  background: url(http://bodysportal.com/images/bodibilding/exercises/exercisesChest/svedenieVerkhnikhBlokovCrossOver.jpg) no-repeat center;
+  background-size: cover;
+}
+#arms {
+  background: url(http://www.himko.org/uploads/upragn/ruk1000.jpg) no-repeat center;
+  background-size: cover;
+}
+#legs {
+  background: url(http://rusbody.com/images/nogi3.jpg) no-repeat center;
+  background-size: cover;
+}
+#back {
+  background: url(http://fixbody.ru/images/stories/bodybuilding/exercise-back/10-tyaga-shtangi-k-podborodku-stoya.jpg) no-repeat center;
+  background-size: cover;
+}
+#shoulders {
+  background: url(http://body-fitnes.com/uploads/posts/2012-10/1349984249_1.jpg) no-repeat center;
+  background-size: cover;
+}
+#press {
+  background: url(http://sportmashina.com/images/muzhskoj_press.jpg) no-repeat center;
+  background-size: cover;
 }

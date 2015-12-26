@@ -1,10 +1,14 @@
-function getDataWithHtml (name, where, callback){
+function getDataAndPastInHtml (name, where, callback){
     var link = 'links/'+name+'.html';
+    var spinner = $('.spinner');
+
+    spinner.addClass('visible');
     $.ajax({
         url: link,
         success: function(data){
             $(where).append(data);
             if(callback) callback();
+            spinner.removeClass('visible');
         }
     });
 }
@@ -21,6 +25,17 @@ function getJSFile (url) {
     });
 }
 
+function ajaxPost(link, str, callback){
+    $.ajax({
+        url: link,
+        type: 'POST',
+        data: str,
+        success: function (data) {
+            console.log(data);
+        }
+    })
+}
+
 function setMarginForAuthorization () {
     var WindowHeight = $(window).height();
     var containerParam = $('#windowLogin');
@@ -29,4 +44,31 @@ function setMarginForAuthorization () {
     } else {
         containerParam.removeClass('more');
     }
+}
+
+function seyHello(name) {
+    var $div = $('<div>');
+    $div.addClass('helloWindow');
+    $div.text('Приветсвую Вас, '+name+'!');
+    setTimeout(function () {
+        $div.appendTo('body').fadeIn(1000);
+    },1500);
+    setTimeout(function () {
+        $div.fadeOut(2000)
+    },3000);
+}
+
+function valid(param, type) {
+    var regex = ['"', '№', '*', '+', '#', '@', '!', '$', '%', '^', '&', '*', '(', ')', '_', '=', '/', '[', ']', '|', ',', '.'];
+    if (type == 'name') {
+        regex.push(1,2,3,4,5,6,7,8,9,0);
+    }
+    for (var i = 0; i < regex.length; i++) {
+        for (var j = 0; j<param.length; j++) {
+            if (param.charAt(j) == regex[i]) {
+                return false;
+            }
+        }
+    }
+    return true;
 }

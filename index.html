@@ -9,11 +9,11 @@
     <!-- FONTAWESOME-->
     <link rel="stylesheet" href="css/font-awesome.min.css">
     <!-- Bootstrap -->
-    <link href="node_modules/bootstrap-grid/grid.min.css" rel="stylesheet">
+    <link href="bower_components/boostrap-grid/grid.css" rel="stylesheet">
     <!-- LESS -->
     <link rel="stylesheet/less" href="less/style.less">
-    <script src="js/less.min.js"></script>
-    <script src="js/prefixfree.min.js"></script>
+    <script src="js/lib/less.min.js"></script>
+    <script src="js/lib/prefixfree.min.js"></script>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -38,13 +38,17 @@
         </div>
       </nav>
     </header>
-    <section></section>
+    <section id="view"></section>
+
+    <div class="spinner hidden">
+      <i class="fa fa-circle-o-notch fa-spin"></i>
+    </div>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/lib/bootstrap.min.js"></script>
     <script src="js/functions.js"></script>
-    <script src="js/bootstrap.min.js"></script>
     <script src="js/script.js"></script>
   </body>
 </html>
