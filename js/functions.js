@@ -76,10 +76,45 @@ function valid(param, type) {
 function loadPage () {
     var hash = location.hash;
 
-    $('.view').remove();
+    $('#view').empty();
     if (hash == '') {
         getDataAndPastInHtml('listItems', '#view');
     } else {
         getDataAndPastInHtml('listExercise', '#view');
+        loadContent();
+    }
+    setTitle();
+
+}
+
+function loadContent() {
+    var hash = location.hash;
+}
+
+function setTitle (name) {
+    var hash = location.hash;
+    var $title = $('#title');
+    if(!name) {
+        switch (hash) {
+            case '#chest':
+                $title.text('Грудь');
+                break;
+            case '#arms':
+                $title.text('Руки');
+                break;
+            case '#legs':
+                $title.text('Ноги');
+                break;
+            case '#shoulders':
+                $title.text('Плечи');
+                break;
+            case '#press':
+                $title.text('Пресс');
+                break;
+            default :
+                $title.text('Главная');
+        }
+    } else {
+        $title.text(name);
     }
 }

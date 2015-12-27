@@ -24,11 +24,13 @@ $(document).ready(function(){
         getDataAndPastInHtml('login', '#contentAuthorization');
     }
 
+    // Отслеживание изменения Hash
     window.addEventListener('hashchange', function () {
         setTimeout(function () {
-            loadPage ();
-        },500);
+            loadPage();
+        },300);
     });
+
     //******************************** События ********************************//
     $(window).resize(function(){    // Применяет стиль при изминении высоты окна
         setMarginForAuthorization();
@@ -86,28 +88,62 @@ $(document).ready(function(){
 
         setTimeout(function () {
             location.hash = $this.attr('id');
-            $('#title').text($this.attr('alt')); //Изменения заголовка страницы
+            //$('#title').text($this.attr('alt'));
+            setTitle($this.attr('alt'));    //Изменения заголовка страницы
         },500);
 
         $('body, html').animate({scrollTop: 0}, 400);
     });
 
+    //Пустой клик
+    $(document).click(function () {
+        var $exerciseInp = $('#addExercise_input');
+        if ($exerciseInp.width() > 50) {
+            $exerciseInp.val('');
+            $exerciseInp.removeClass('open');
+        }
+    });
 
-    var menuObj = {
+    // Добавление нового названия упражнения
+    $(document).on('click', '#AddExercise', function () {
+        var $exerciseInp =  $('#addExercise_input');
+        var clickOnPlus = true;
+
+        $(document).on('click', '#addExercise_input', function () {
+            return clickOnPlus = false;
+        });
+
+        if (clickOnPlus) {
+            $exerciseInp.toggleClass('open');
+        }
+        if($exerciseInp.val()) {
+            var $li = $('<li>');
+            $li.text($exerciseInp.val());
+            $li.prependTo('#listExercise').addClass('animated fadeInDown');
+        }
+    });
+
+
+
+        var menuObj = {
         chest: {
-            globalId: 10,
+            globalId: 1000,
             exercise: [{
-                name: 'Chest0',
+                name: 'Жим лежа',
                 id: 10
             }]
+        },
+        arms: {
+            globalId: 2000
         }
     };
 
-    menuObj.chest.exercise.push({
-        name: 'Chest',
-        id: menuObj.chest.exercise.length+menuObj.chest.globalId
-    });
-    console.log(menuObj);
+    var menu = JSON.parse(localStorage.getItem('menu'));
+    menu.legs = {
+        globalId: 3000
+    };
 
+    localStorage.setItem('menu', JSON.stringify(menuObj));
+    console.log(menu);
 
 });

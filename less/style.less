@@ -2,6 +2,10 @@
 
 @blue: #3f7bff;
 
+.transition {
+  transition: all .5s ease;
+}
+
 body {
   background: #ECECEC;
   padding: 0;
@@ -276,4 +280,118 @@ section {
 #press {
   background: url(http://sportmashina.com/images/muzhskoj_press.jpg) no-repeat center;
   background-size: cover;
+}
+
+//****************************** List Exercise ****************************//
+//*************************************************************************//
+
+#AddExercise {
+  margin: 15px;
+  height: 40px;
+  background: #dedede;
+  border: 1px solid #999;
+  border-radius: 3px;
+  text-align: center;
+  line-height: 40px;
+  position: relative;
+  input {
+    height: 100%;
+    width: 0;
+    float: left;
+    left: -20px;
+    border-radius: 3px;
+    font-size: 20px;
+    border: none;
+    transition: width .3s ease;
+    .boxSizing;
+  }
+  .open {
+    width: 80%;
+    padding: 0 10px;
+    border: 1px solid #999;
+  }
+  button {
+    padding: 10px 15px;
+    border: none;
+    font-size: 20px;
+    color: #777;
+    background: none;
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+#listExercise {
+  list-style-type: none;
+  padding: 0 15px;
+  margin-top: 40px;
+  li {
+    display: block;
+    width: 100%;
+    position: relative;
+    .transition;
+    line-height: 55px;
+    text-align: center;
+    background: #ebebeb;
+    margin: 10px 0;
+    box-shadow: 0 1px 5px rgba(0,0,0,.3);
+    font-size: 18px;
+  }
+}
+
+//******************************** Animation ******************************//
+//*************************************************************************//
+.animated {
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
+@-webkit-keyframes fadeInDown {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(0, -100%, 0);
+    transform: translate3d(0, -100%, 0);
+  }
+
+  to {
+    opacity: 1;
+    -webkit-transform: none;
+    transform: none;
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(0, -100%, 0);
+    transform: translate3d(0, -100%, 0);
+  }
+
+  to {
+    opacity: 1;
+    -webkit-transform: none;
+    transform: none;
+  }
+}
+
+.fadeInDown {
+  -webkit-animation-name: fadeInDown;
+  animation-name: fadeInDown;
+}
+
+@-webkit-keyframes fadeInDownBig {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(0, -2000px, 0);
+    transform: translate3d(0, -2000px, 0);
+  }
+
+  to {
+    opacity: 1;
+    -webkit-transform: none;
+    transform: none;
+  }
 }
