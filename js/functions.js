@@ -74,14 +74,22 @@ function valid(param, type) {
 }
 
 function loadPage () {
-    var hash = location.hash;
+    var hash = location.hash.substr(1);
+    var $body = $('body');
+
+    if(Number(hash) != 0 && !isNaN(Number(hash))) {     // Если hash число =>
+        getDataAndPastInHtml('exercise', '#view');
+        $body.css('background', getColor());
+    } else {
+        $body.css('background', '#ECECEC');
+        if (hash == '') {
+            getDataAndPastInHtml('listItems', '#view');
+        } else {
+            getDataAndPastInHtml('listExercise', '#view', createListExercise);
+        }
+    }
 
     $('#view').empty();
-    if (hash == '') {
-        getDataAndPastInHtml('listItems', '#view');
-    } else {
-        getDataAndPastInHtml('listExercise', '#view', createListExercise);
-    }
     loadContent();
 }
 
@@ -127,3 +135,18 @@ function createListExercise () {
     }
 
 }
+
+function getColor () {
+    var colorArray = [
+        '#FF033E',
+        '#423189',
+        '#ED760E',
+        '#C41E3A',
+        '#4169E1',
+        '#76FF7A',
+        '#E59E1F'
+    ];
+    var num = Math.floor(Math.random()*colorArray.length);
+    return colorArray[num];
+}
+

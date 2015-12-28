@@ -161,5 +161,47 @@ $(document).ready(function(){
         }
     });
 
+    // Переход к упражнению
+    $(document).on('click', '#listExercise li', function () {
+        location.hash = $(this).attr('id');
+        console.log('get');
+        getJSFile('js/swiper.js');
+    });
+
+    // счетчик для упражнений
+    $(document).on('click', '.btnExs', function () {
+        var $contentBtn = $(this).text();
+        var $winExs = $('#exerciseTemp .window');
+        var $winExsText = $winExs.text();
+        var $winExsNum = Number($winExsText)+Number($contentBtn);
+        $winExs.text($winExsNum);
+    });
+
+    // отслеживание изменения input[type=range]
+    $(document).on('change', 'input[type=range]', function () {
+        var $times = $('#times');
+        $times.text($(this).val());
+        console.log($(this).val());
+    });
+
+    function handleMouseMove(e) {
+        var posX = e.clientX;
+        var posY = e.clientY;
+
+        console.log(posX);
+
+        e.preventDefault();
+    }
+
+    $(window).mousemove(function(e) {
+        console.log(e);
+        $(window).bind('mousemove', handleMouseMove);
+    });
+
+    $(window).mouseup(function() {
+        $(window).unbind('mousemove', handleMouseMove);
+    });
+
+    var swiper = new Swiper('.swiper-container');
 
 });

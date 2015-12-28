@@ -11,6 +11,7 @@ body {
   padding: 0;
   margin: 0;
   font-family: 'Roboto', sans-serif;
+  transition: all 1s ease;
 }
 
 
@@ -301,20 +302,23 @@ section {
     border-radius: 3px;
     font-size: 20px;
     border: none;
-    transition: width .3s ease;
+    transition: all .3s ease;
     .boxSizing;
+    opacity: 0;
   }
   .open {
+    opacity: 1;
     width: 80%;
     padding: 0 10px;
     border: 1px solid #999;
   }
   button {
-    padding: 10px 15px;
+    padding: 0 15px;
     border: none;
     font-size: 20px;
     color: #777;
     background: none;
+    line-height: 40px;
     &:focus {
       outline: none;
     }
@@ -334,7 +338,7 @@ section {
     text-align: center;
     background: #ebebeb;
     margin: 10px 0;
-    box-shadow: 0 1px 5px rgba(0,0,0,.3);
+    box-shadow: 0 1px 5px rgba(0,0,0,.4);
     font-size: 18px;
   }
 }
@@ -393,4 +397,109 @@ section {
     -webkit-transform: none;
     transform: none;
   }
+}
+
+//**************************** Exercise Template **************************//
+//*************************************************************************//
+
+#exerciseTemp {
+  .wrapper {
+    text-align: center;
+    color: #ffffff;
+    #label {
+      margin: 0 auto;
+      width: 150px;
+      background: rgba(255, 255, 255, .6);
+      border: 1px solid #fff;
+      border-top: none;
+      border-radius: 0 0 15px 15px;
+      p {
+        display: inline-block;
+        line-height: 2px;
+      }
+      p#labelExercise {
+        margin-top: 0;
+      }
+    }
+    #title {
+      margin: 10px 0;
+    }
+    #average {
+      p {
+        margin: 5px 0;
+        display: inline-block;
+      }
+      p:first-child {
+        font-size: 22px;
+        font-weight: bold;
+      }
+    }
+    .navigation {
+      margin-top: 30px;
+      div {
+        display: inline-block;
+        height: 50px;
+        width: 50px;
+        border: 1px solid #dedede;
+        border-radius: 3px;
+        line-height: 50px;
+        background: rgba(255,255,255, .2);
+      }
+      .window {
+        width: 80px;
+        font-size: 20px;
+        font-weight: bold;
+        line-height: 46px;
+      }
+    }
+    #times {
+      font-size: 28px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    #inpRange {
+      .boxSizing;
+      width: 80%;
+    }
+    input[type=range] {
+      -webkit-appearance: none;
+      width: 100%;
+      border-radius: 8px;
+      height: 7px;
+      border: 1px solid #bdc3c7;
+      background-color: #fff;
+    }
+    input[type='range']::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      background-color: #ecf0f1;
+      border: 1px solid #bdc3c7;
+      width: 20px;
+      height: 20px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    input[type=range]::-moz-range-track {
+      border-radius: 8px;
+      height: 7px;
+      border: 1px solid #bdc3c7;
+      background-color: #fff;
+    }
+    input[type=range]::-moz-range-thumb {
+      background: #ecf0f1;
+      border: 1px solid #bdc3c7;
+      width: 20px;
+      height: 20px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+  }
+}
+.swiper-container {
+  width: 300px;
+  height: 200px;
+  margin: 20px auto;
+}
+
+.swiper-slide {
+  background: rgba(255,255,255, .3);
 }

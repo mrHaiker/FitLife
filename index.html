@@ -6,12 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>FitLife</title>
-    <!-- FONTAWESOME-->
     <link rel="stylesheet" href="css/font-awesome.min.css">
-    <!-- Bootstrap -->
     <link href="bower_components/boostrap-grid/grid.css" rel="stylesheet">
-    <!-- LESS -->
     <link rel="stylesheet/less" href="less/style.less">
+    <link rel="stylesheet" href="bower_components/Swiper/dist/css/swiper.min.css">
     <script src="js/lib/less.min.js"></script>
     <script src="js/lib/prefixfree.min.js"></script>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -38,7 +36,18 @@
         </div>
       </nav>
     </header>
-    <section id="view"></section>
+    <section></section>
+
+    <section>
+      <div class="swiper-container">
+        <div class="swiper-wrapper" id="view">
+          <div class="swiper-slide">Slide 1</div>
+          <div class="swiper-slide">Slide 2</div>
+          <div class="swiper-slide">Slide 3</div>
+          ...
+        </div>
+      </div>
+    </section>
 
     <div class="spinner hidden">
       <i class="fa fa-circle-o-notch fa-spin"></i>
@@ -48,6 +57,7 @@
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/lib/bootstrap.min.js"></script>
+    <script src="bower_components/Swiper/dist/js/swiper.min.js"></script>
     <script src="js/functions.js"></script>
     <script src="js/script.js"></script>
   </body>
