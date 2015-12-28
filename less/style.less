@@ -211,13 +211,12 @@ header {
   }
 }
 
-//****************************** Hello Window *****************************//
+//****************************** Alert Window *****************************//
 //*************************************************************************//
 
-.helloWindow {
+.alert {
   position: fixed;
   bottom: 10px;
-  height: 40px;
   width: 80%;
 
   margin-left: 10%;
@@ -349,11 +348,11 @@ section {
   animation-fill-mode: both;
 }
 
-@-webkit-keyframes fadeInDown {
+@-webkit-keyframes fadeInUp {
   from {
     opacity: 0;
-    -webkit-transform: translate3d(0, -100%, 0);
-    transform: translate3d(0, -100%, 0);
+    -webkit-transform: translate3d(0, 100%, 0);
+    transform: translate3d(0, 100%, 0);
   }
 
   to {
@@ -363,11 +362,11 @@ section {
   }
 }
 
-@keyframes fadeInDown {
+@keyframes fadeInUp {
   from {
     opacity: 0;
-    -webkit-transform: translate3d(0, -100%, 0);
-    transform: translate3d(0, -100%, 0);
+    -webkit-transform: translate3d(0, 100%, 0);
+    transform: translate3d(0, 100%, 0);
   }
 
   to {
@@ -377,16 +376,16 @@ section {
   }
 }
 
-.fadeInDown {
-  -webkit-animation-name: fadeInDown;
-  animation-name: fadeInDown;
+.fadeInUp {
+  -webkit-animation-name: fadeInUp;
+  animation-name: fadeInUp;
 }
 
-@-webkit-keyframes fadeInDownBig {
+@-webkit-keyframes fadeInUpBig {
   from {
     opacity: 0;
-    -webkit-transform: translate3d(0, -2000px, 0);
-    transform: translate3d(0, -2000px, 0);
+    -webkit-transform: translate3d(0, 2000px, 0);
+    transform: translate3d(0, 2000px, 0);
   }
 
   to {

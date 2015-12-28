@@ -7,8 +7,8 @@ function getDataAndPastInHtml (name, where, callback){
         url: link,
         success: function(data){
             $(where).append(data);
-            if(callback) callback();
             spinner.removeClass('visible');
+            if(callback) callback();
         }
     });
 }
@@ -46,16 +46,16 @@ function setMarginForAuthorization () {
     }
 }
 
-function seyHello(name) {
+function alert(text) {
     var $div = $('<div>');
-    $div.addClass('helloWindow');
-    $div.text('Приветсвую Вас, '+name+'!');
+    $div.addClass('alert');
+    $div.text(text);
     setTimeout(function () {
         $div.appendTo('body').fadeIn(1000);
-    },1500);
+    },300);
     setTimeout(function () {
         $div.fadeOut(2000)
-    },3000);
+    },1800);
 }
 
 function valid(param, type) {
@@ -80,24 +80,19 @@ function loadPage () {
     if (hash == '') {
         getDataAndPastInHtml('listItems', '#view');
     } else {
-        getDataAndPastInHtml('listExercise', '#view');
-        loadContent();
+        getDataAndPastInHtml('listExercise', '#view', createListExercise);
     }
-    setTitle();
-
+    loadContent();
 }
 
-function loadContent() {
-    var hash = location.hash;
-}
-
-function setTitle (name) {
+function loadContent (name) {
     var hash = location.hash;
     var $title = $('#title');
     if(!name) {
         switch (hash) {
             case '#chest':
                 $title.text('Грудь');
+                //createListExercise('chest');
                 break;
             case '#arms':
                 $title.text('Руки');
@@ -117,4 +112,18 @@ function setTitle (name) {
     } else {
         $title.text(name);
     }
+}
+
+function createListExercise () {
+    var menu = JSON.parse(localStorage.getItem('menu'));
+    var hash = location.hash.substr(1);
+    var exArray = menu[hash].exercise;
+    if (!exArray) return;
+    for (var i = 0; i<exArray.length; i++) {
+        var $li = $('<li>');
+        $li.attr('id', exArray[i].id);
+        $li.text(exArray[i].name);
+        $li.appendTo('#listExercise');
+    }
+
 }

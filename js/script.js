@@ -1,20 +1,17 @@
 $(document).ready(function(){
 
     var authorization = true;   //Проверка авторизации
-    var userName,
-        userData = {},
-        lastVisit,
-        $userName;
+    var userData = {}, $userName;
+    var menu = JSON.parse(localStorage.getItem('menu'));
 
-
-    if(!localStorage.getItem('UserData')) {
+    if(!localStorage.getItem('userData')) {
         // Если не задано имя и нет никаких данных на локальной машине
         // необходимо спросить имя и создать первую запись
         getDataAndPastInHtml('whatName', 'body', setMarginForAuthorization);
     } else {
         loadPage();
-        userName = JSON.parse(localStorage.getItem('UserData')).name;
-        seyHello(userName);
+        $userName = JSON.parse(localStorage.getItem('userData')).name;
+        alert('Приветсвую Вас, '+$userName+'!');
     }
 
 
@@ -69,14 +66,42 @@ $(document).ready(function(){
     $(document).on('click', '#setName', function () {
         $userName = $('#UserName');
         userData.name = $userName.val();
+        menu = {
+           chest: {
+               globalId: 1000,
+               exercise: []
+           },
+           arms: {
+               globalId: 2000,
+               exercise: []
+           },
+           legs: {
+               globalId: 3000,
+               exercise: []
+           },
+           back: {
+               globalId: 4000,
+               exercise: []
+           },
+           shoulders: {
+               globalId: 5000,
+               exercise: []
+           },
+           press: {
+               globalId: 6000,
+               exercise: []
+           }
+        };
 
-        localStorage.setItem('UserData', JSON.stringify(userData));
-        userName = JSON.parse(localStorage.getItem('UserData')).name;
+        localStorage.setItem('userData', JSON.stringify(userData));
+        localStorage.setItem('menu', JSON.stringify(menu));
+        userName = JSON.parse(localStorage.getItem('userData')).name;
 
         getDataAndPastInHtml('listItems', '#view');
         $('#yourName').remove();    //удаляем окно с вопросом
+        location.hash = '';
 
-        seyHello(userName);
+        alert('Приветсвую Вас, '+$userName+'!');
     });
 
 
@@ -88,8 +113,6 @@ $(document).ready(function(){
 
         setTimeout(function () {
             location.hash = $this.attr('id');
-            //$('#title').text($this.attr('alt'));
-            setTitle($this.attr('alt'));    //Изменения заголовка страницы
         },500);
 
         $('body, html').animate({scrollTop: 0}, 400);
@@ -108,6 +131,8 @@ $(document).ready(function(){
     $(document).on('click', '#AddExercise', function () {
         var $exerciseInp =  $('#addExercise_input');
         var clickOnPlus = true;
+        var hash = location.hash.substr(1);
+        var exercise = menu[hash].exercise;
 
         $(document).on('click', '#addExercise_input', function () {
             return clickOnPlus = false;
@@ -118,32 +143,23 @@ $(document).ready(function(){
         }
         if($exerciseInp.val()) {
             var $li = $('<li>');
+            var length = exercise.length;
+            var idEx = length == 0 ? menu[hash].globalId : exercise[length-1].id;
+
+            exercise.push({
+                id: idEx+1,
+                name: $exerciseInp.val()
+            });
+
+            localStorage.setItem('menu', JSON.stringify(menu));
+
             $li.text($exerciseInp.val());
-            $li.prependTo('#listExercise').addClass('animated fadeInDown');
+            $li.attr('id', idEx+1);
+            $li.appendTo('#listExercise').addClass('animated fadeInUp');
+
+            alert('Добавлен новый элемент');
         }
     });
 
-
-
-        var menuObj = {
-        chest: {
-            globalId: 1000,
-            exercise: [{
-                name: 'Жим лежа',
-                id: 10
-            }]
-        },
-        arms: {
-            globalId: 2000
-        }
-    };
-
-    var menu = JSON.parse(localStorage.getItem('menu'));
-    menu.legs = {
-        globalId: 3000
-    };
-
-    localStorage.setItem('menu', JSON.stringify(menuObj));
-    console.log(menu);
 
 });
