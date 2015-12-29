@@ -84,11 +84,47 @@ function loadPage () {
     if (hashArray.length > 1) {
         if (!isNaN(Number(hashArray[1]))) {     // Если hash число =>
             getDataAndPastInHtml('exerciseWrapper', '#view', function () {
+                // Запрос шаблона приложения и обработка данных с хранилища
                 getDataAndPastInHtml('exercise', '.swiper-wrapper', function (data) {
+                    var $swiper = $('.swiper-container');
+                    var history = JSON.parse(localStorage.getItem(hashArray[1]));
+                    var date = new Date();
+                    var toDay = date.getFullYear()+'/'+(date.getMonth()+1)+'/'+date.getDate();
+                    var toDayArray, lastDayArray;
+                    if (!history) {
+                        console.info('I create new object');
+                        var nOb = [
+                            {
+                                date: '2015/12/27'
+                            }
+                        ];
+                        localStorage.setItem(hashArray[1], JSON.stringify(nOb));
+                        history = JSON.parse(localStorage.getItem(hashArray[1]));
+                    }
+                    console.log(history);
+                    if (history[history.length-1].date != toDay) {
+                        history.push({
+                            date: toDay
+                        })
+                    }
+
+                    for (var j = history.length-1; j>=0; j--) {
+                        if (history[j].date == toDay) {
+                            toDayArray = history[j];
+                            lastDayArray = history[j-1];
+                        }
+                    }
+
+
+                    console.log(toDayArray);
+                    console.info(lastDayArray);
+
+                    localStorage.setItem(hashArray[1], JSON.stringify(history));
+
+                    // цикл выстраивает n кол-во окон упражнения
                     for (var i = 2; i <= 10; i++) {
                         var obj = $(data);
                         var selector = '#' + i + ' .labelExercise';
-                        var $swiper = $('.swiper-container');
 
                         obj.attr('id', i);
                         obj.css('background', getRandomColor());

@@ -3,6 +3,8 @@ $(document).ready(function(){
     var authorization = true;   //Проверка авторизации
     var userData = {}, $userName, interval;
     var menu = JSON.parse(localStorage.getItem('menu'));
+    var date = new Date();
+    var toDay = date.getFullYear()+'/'+date.getMonth()+1+'/'+date.getDate();
 
     if(!localStorage.getItem('userData')) {
         // Если не задано имя и нет никаких данных на локальной машине
@@ -105,7 +107,7 @@ $(document).ready(function(){
         localStorage.setItem('menu', JSON.stringify(menu));
         $userName = JSON.parse(localStorage.getItem('userData')).name;
 
-        getDataAndPastInHtml('listItems', '#view');
+        //getDataAndPastInHtml('listItems', '#view');
         $('#yourName').remove();    //удаляем окно с вопросом
         location.hash = '';
 
@@ -174,12 +176,26 @@ $(document).ready(function(){
         location.hash += '/'+$(this).attr('id');
     });
 
+
     // счетчик для упражнений
     $(document).on('click', '.btnExs', function () {
         var $contentBtn = $(this).text();
         var $window = $('.swiper-slide-active .window');
+        var $parentId = $('.swiper-slide-active').attr('id');
         var windowNum = Number($window.text());
+        var hashArray = location.hash.substr(1).split('/');
+        var history = JSON.parse(localStorage.getItem(hashArray[1]));
+        var lastItem = history[history.length-1];
+        var exercise = lastItem.exercise;
+
         windowNum += Number($contentBtn);
+
+
+        exercise['exs'+$parentId] = {
+            lot: windowNum
+        };
+        console.log(exercise);
+
         $window.text(windowNum);
     });
 
@@ -191,9 +207,34 @@ $(document).ready(function(){
         e.preventDefault();
     });
 
-    jQuery('.slider').range2DSlider({
-        template:'horizontal',
-        round:true,
-        onlyGridPoint:true
-    });
+    var nOob = [
+        {
+            date: '2015/12/29',
+            exs1 : {
+                lot: 50,
+                times: 6
+            }
+        },
+
+        {
+            date: '2015/12/28',
+            exercise : [
+                {
+                    num: 2,
+                    lot: 33,
+                    times:6
+                }
+            ]
+        },
+        {
+            date: '2015/12/27'
+
+        }
+    ];
+    //console.log(nOob[0]);
+    if (nOob[0].date == toDay) {
+        var exercise = nOob[0].exercise;
+        //console.log(exercise[0].lot);
+    }
+
 });
