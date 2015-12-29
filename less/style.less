@@ -219,6 +219,7 @@ header {
   position: fixed;
   bottom: 10px;
   width: 80%;
+  z-index: 100;
 
   margin-left: 10%;
 
@@ -237,6 +238,8 @@ section {
   .main-group {
     list-style-type: none;
     padding: 0 15px;
+    width: 100%;
+    .boxSizing;
     li {
       height: 100px;
       width: 100%;
@@ -285,42 +288,45 @@ section {
 //****************************** List Exercise ****************************//
 //*************************************************************************//
 
-#AddExercise {
-  margin: 15px;
-  height: 40px;
-  background: #dedede;
-  border: 1px solid #999;
-  border-radius: 3px;
-  text-align: center;
-  line-height: 40px;
-  position: relative;
-  input {
-    height: 100%;
-    width: 0;
-    float: left;
-    left: -20px;
-    border-radius: 3px;
-    font-size: 20px;
-    border: none;
-    transition: all .3s ease;
-    .boxSizing;
-    opacity: 0;
-  }
-  .open {
-    opacity: 1;
-    width: 80%;
-    padding: 0 10px;
+.wrapper {
+  width: 100%;
+  #AddExercise {
+    margin: 15px;
+    height: 40px;
+    background: #dedede;
     border: 1px solid #999;
-  }
-  button {
-    padding: 0 15px;
-    border: none;
-    font-size: 20px;
-    color: #777;
-    background: none;
+    border-radius: 3px;
+    text-align: center;
     line-height: 40px;
-    &:focus {
-      outline: none;
+    position: relative;
+    input {
+      height: 100%;
+      width: 0;
+      float: left;
+      left: -20px;
+      border-radius: 3px;
+      font-size: 20px;
+      border: none;
+      transition: all .3s ease;
+      .boxSizing;
+      opacity: 0;
+    }
+    .open {
+      opacity: 1;
+      width: 80%;
+      padding: 0 10px;
+      border: 1px solid #999;
+    }
+    button {
+      padding: 0 15px;
+      border: none;
+      font-size: 20px;
+      color: #777;
+      background: none;
+      line-height: 40px;
+      &:focus {
+        outline: none;
+      }
     }
   }
 }
@@ -402,7 +408,9 @@ section {
 //**************************** Exercise Template **************************//
 //*************************************************************************//
 
-#exerciseTemp {
+.exerciseTemp {
+  margin: 0 auto;
+  background: #4169E1;
   .wrapper {
     text-align: center;
     color: #ffffff;
@@ -460,6 +468,10 @@ section {
     #inpRange {
       .boxSizing;
       width: 80%;
+      margin-bottom: 10px;
+      &:focus {
+        outline: none;
+      }
     }
     input[type=range] {
       -webkit-appearance: none;
@@ -494,12 +506,7 @@ section {
     }
   }
 }
-.swiper-container {
-  width: 300px;
-  height: 200px;
-  margin: 20px auto;
-}
 
-.swiper-slide {
-  background: rgba(255,255,255, .3);
+.swiper-container {
+  width: 100%;
 }

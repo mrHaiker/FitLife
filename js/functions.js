@@ -8,7 +8,8 @@ function getDataAndPastInHtml (name, where, callback){
         success: function(data){
             $(where).append(data);
             spinner.removeClass('visible');
-            if(callback) callback();
+
+            if(callback) callback(data);
         }
     });
 }
@@ -73,15 +74,32 @@ function valid(param, type) {
     return true;
 }
 
+// загружает сонтент в соответствии с hash
 function loadPage () {
     var hash = location.hash.substr(1);
-    var $body = $('body');
+    var $view = $('#view');
 
     if(Number(hash) != 0 && !isNaN(Number(hash))) {     // Если hash число =>
-        getDataAndPastInHtml('exercise', '#view');
-        $body.css('background', getColor());
+        getDataAndPastInHtml('exerciseWrapper', '#view');
+        getDataAndPastInHtml('exercise', '.swiper-wrapper', function (data) {
+            for (var i = 2; i<=10; i++) {
+                var obj = $(data);
+                var selector = '#'+i+' .labelExercise';
+                var $swiper = $('.swiper-container');
+
+                obj.attr('id', i);
+                obj.css('background', getRandomColor());
+
+                $('.swiper-wrapper').append(obj);
+                //$view.append(obj);
+                $swiper.css('height', window.innerHeight-$swiper.offset().top);
+
+                $(selector).text(i);
+            }
+            var mySwiper = new Swiper('.swiper-container');
+        });
+
     } else {
-        $body.css('background', '#ECECEC');
         if (hash == '') {
             getDataAndPastInHtml('listItems', '#view');
         } else {
@@ -89,29 +107,30 @@ function loadPage () {
         }
     }
 
-    $('#view').empty();
+    $view.empty();
     loadContent();
 }
 
 function loadContent (name) {
-    var hash = location.hash;
+    var hash = location.hash.substr(1);
+    console.log(hash.search('chest'));
     var $title = $('#title');
     if(!name) {
+        //if(hash.search('chest') == 0) $title.text('Грудь');
         switch (hash) {
-            case '#chest':
+            case 'chest' || 1:
                 $title.text('Грудь');
-                //createListExercise('chest');
                 break;
-            case '#arms':
+            case 'arms':
                 $title.text('Руки');
                 break;
-            case '#legs':
+            case 'legs':
                 $title.text('Ноги');
                 break;
-            case '#shoulders':
+            case 'shoulders':
                 $title.text('Плечи');
                 break;
-            case '#press':
+            case 'press':
                 $title.text('Пресс');
                 break;
             default :
@@ -122,6 +141,7 @@ function loadContent (name) {
     }
 }
 
+// функция достает из локального хранилища данные о созданных упражнениях
 function createListExercise () {
     var menu = JSON.parse(localStorage.getItem('menu'));
     var hash = location.hash.substr(1);
@@ -138,15 +158,25 @@ function createListExercise () {
 
 function getColor () {
     var colorArray = [
-        '#FF033E',
-        '#423189',
-        '#ED760E',
-        '#C41E3A',
-        '#4169E1',
-        '#76FF7A',
-        '#E59E1F'
+        '#423189', //Глубокий фиолетовый
+        '#ED760E', //Жёлто-оранжевый
+        '#C41E3A', //Кардинал
+        '#4169E1', //Королевский синий
+        '#E59E1F',  //Насыщенный жёлтый
+        'rgb(188,173,155)',  //true
+        'rgb(57,14,83)',  //true
+        'rgb(166,4,41)'  //true
     ];
     var num = Math.floor(Math.random()*colorArray.length);
     return colorArray[num];
 }
+
+function getRandomColor () {
+    var num = 200;
+    var r = Math.floor(Math.random()*num);
+    var g = Math.floor(Math.random()*num);
+    var b = Math.floor(Math.random()*num);
+    return 'rgb('+r+','+g+','+b+')'
+}
+
 
