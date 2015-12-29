@@ -12,6 +12,9 @@ body {
   margin: 0;
   font-family: 'Roboto', sans-serif;
   transition: all 1s ease;
+  @media screen and (min-width: 992px) {
+    display: none;
+  }
 }
 
 
@@ -432,7 +435,7 @@ section {
     #title {
       margin: 10px 0;
     }
-    #average {
+    .average {
       p {
         margin: 5px 0;
         display: inline-block;
@@ -464,14 +467,13 @@ section {
 
       }
     }
-    #times {
+    .times {
       font-size: 28px;
       font-weight: bold;
       margin-bottom: 10px;
     }
-    #inpRange {
+    .inp-range {
       .boxSizing;
-      width: 80%;
       margin-bottom: 10px;
       &:focus {
         outline: none;
@@ -479,7 +481,7 @@ section {
     }
     input[type=range] {
       -webkit-appearance: none;
-      width: 100%;
+      width: 90%;
       border-radius: 8px;
       height: 7px;
       border: 1px solid #bdc3c7;

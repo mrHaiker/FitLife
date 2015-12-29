@@ -1,29 +1,17 @@
 $(document).ready(function(){
 
-    var authorization = true;   //Проверка авторизации
-    var userData = {}, $userName, interval;
+    var userData = {}, $userName;
     var menu = JSON.parse(localStorage.getItem('menu'));
-    var date = new Date();
-    var toDay = date.getFullYear()+'/'+date.getMonth()+1+'/'+date.getDate();
 
     if(!localStorage.getItem('userData')) {
         // Если не задано имя и нет никаких данных на локальной машине
         // необходимо спросить имя и создать первую запись
-        getDataAndPastInHtml('whatName', 'body', setMarginForAuthorization);
+        location.hash = 'newUser';
     } else {
         loadPage();
         $userName = JSON.parse(localStorage.getItem('userData')).name;
         alert('Приветсвую Вас, '+$userName+'!');
     }
-
-
-    // Authorization
-    if(!authorization) {
-        getDataAndPastInHtml('authorization', 'body', setMarginForAuthorization);
-        getDataAndPastInHtml('login', '#contentAuthorization');
-    }
-
-
 
     //******************************** События ********************************//
     $(window).resize(function(){    // Применяет стиль при изминении высоты окна
@@ -186,55 +174,36 @@ $(document).ready(function(){
         var hashArray = location.hash.substr(1).split('/');
         var history = JSON.parse(localStorage.getItem(hashArray[1]));
         var lastItem = history[history.length-1];
-        var exercise = lastItem.exercise;
 
         windowNum += Number($contentBtn);
 
-
-        exercise['exs'+$parentId] = {
-            lot: windowNum
+        lastItem['exs'+$parentId] = {
+            lot: windowNum,
+            times: typeof lastItem['exs'+$parentId] == "undefined" ? 0 : lastItem['exs'+$parentId].times
         };
-        console.log(exercise);
+        console.log(history);
 
+        localStorage.setItem(hashArray[1], JSON.stringify(history));
         $window.text(windowNum);
     });
 
     // отслеживание изменения input[type=range]
-    $(document).on('change', 'input[type=range]', function (e) {
-        var $times = $('.swiper-slide-active #times');
+    $(document).on('change', 'input[type=range]', function () {
+        var $times = $('.swiper-slide-active .times');
+        var hashArray = location.hash.substr(1).split('/');
+        var history = JSON.parse(localStorage.getItem(hashArray[1]));
+        var lastItem = history[history.length-1];
+        var $parentId = $('.swiper-slide-active').attr('id');
+
+        lastItem['exs'+$parentId] = {
+            lot: typeof lastItem['exs'+$parentId] == "undefined" ? 0 : lastItem['exs'+$parentId].lot,
+            times: Number($(this).val())
+        };
+
+        console.log(history);
+
+        localStorage.setItem(hashArray[1], JSON.stringify(history));
         $times.text($(this).val());
-        console.log($(this).val());
-        e.preventDefault();
     });
-
-    var nOob = [
-        {
-            date: '2015/12/29',
-            exs1 : {
-                lot: 50,
-                times: 6
-            }
-        },
-
-        {
-            date: '2015/12/28',
-            exercise : [
-                {
-                    num: 2,
-                    lot: 33,
-                    times:6
-                }
-            ]
-        },
-        {
-            date: '2015/12/27'
-
-        }
-    ];
-    //console.log(nOob[0]);
-    if (nOob[0].date == toDay) {
-        var exercise = nOob[0].exercise;
-        //console.log(exercise[0].lot);
-    }
 
 });
