@@ -81,105 +81,60 @@ function loadPage () {
     var hashArray = hash.split('/');
     $view.empty();
 
-    console.log(hashArray);
     if (hashArray.length > 1) {
-        console.log('больше 1');
-        if(!isNaN(Number(hashArray[1]))) {     // Если hash число =>
-            getDataAndPastInHtml('exerciseWrapper', '#view');
-            getDataAndPastInHtml('exercise', '.swiper-wrapper', function (data) {
-                for (var i = 2; i <= 10; i++) {
-                    var obj = $(data);
-                    var selector = '#' + i + ' .labelExercise';
-                    var $swiper = $('.swiper-container');
+        if (!isNaN(Number(hashArray[1]))) {     // Если hash число =>
+            getDataAndPastInHtml('exerciseWrapper', '#view', function () {
+                getDataAndPastInHtml('exercise', '.swiper-wrapper', function (data) {
+                    for (var i = 2; i <= 10; i++) {
+                        var obj = $(data);
+                        var selector = '#' + i + ' .labelExercise';
+                        var $swiper = $('.swiper-container');
 
-                    obj.attr('id', i);
-                    obj.css('background', getRandomColor());
+                        obj.attr('id', i);
+                        obj.css('background', getRandomColor());
 
-                    $('.swiper-wrapper').append(obj);
-                    //$view.append(obj);
-                    $swiper.css('height', window.innerHeight - $swiper.offset().top);
+                        $('.swiper-wrapper').append(obj);
+                        $swiper.css('height', window.innerHeight - $swiper.offset().top);
 
-                    $(selector).text(i);
-                }
-                var mySwiper = new Swiper('.swiper-container');
+                        $(selector).text(i);
+                    }
+                    var mySwiper = new Swiper('.swiper-container');
+                });
             });
         } else {
             getDataAndPastInHtml('listItems', '#view', function () {
                 $('#title').text('Главная');
             });
         }
-    } else if(hashArray.length == 1 && hashArray[0] != '') {    // если хэш только одно слово
-        console.log('равно 1');
+    } else if (hashArray.length == 1 && hashArray[0] != '') {    // если хэш только одно слово
         getDataAndPastInHtml('listExercise', '#view', function () {
+            //достает из локального хранилища данные о созданных упражнениях
             var menu = JSON.parse(localStorage.getItem('menu'));
             var hash = hashArray[0];
-            if (!menu[hash]){   // если в объекте нет упражнения указанного в hash => отправляем на главную
+            if (!menu[hash]) {   // если в объекте нет упражнения указанного в hash => отправляем на главную
                 $view.empty();
                 getDataAndPastInHtml('listItems', '#view', function () {
                     $('#title').text('Главная');
                 });
                 location.hash = '';
-                console.log('object is not find');
-                return;
-            }
-            var exArray = menu[hash].exercise;
+            } else {
+                var exArray = menu[hash].exercise;
 
-            for (var i = 0; i<exArray.length; i++) {
-                var $li = $('<li>');
-                $li.attr('id', exArray[i].id);
-                $li.text(exArray[i].name);
-                $li.appendTo('#listExercise');
+                for (var i = 0; i < exArray.length; i++) {
+                    var $li = $('<li>');
+                    $li.attr('id', exArray[i].id);
+                    $li.text(exArray[i].name);
+                    $li.appendTo('#listExercise');
+                }
+                $('#title').text(menu[hash].name);
             }
-            $('#title').text(menu[hash].name);
         });
     } else {
         getDataAndPastInHtml('listItems', '#view', function () {
             $('#title').text('Главная');
         });
     }
-
-    //if(Number(hash) != 0 && !isNaN(Number(hash))) {     // Если hash число =>
-    //
-    //
-    //} else {
-        //if (hash == '') {
-        //    getDataAndPastInHtml('listExercise', '#view', createListExercise);
-        //} else {
-        //
-        //}
-    //}
-
-    //loadContent();
 }
-
-//function loadContent (name) {
-//    var hash = location.hash.substr(1);
-//    var $title = $('#title');
-//    if(!name) {
-//        //if(hash.search('chest') == 0) $title.text('Грудь');
-//        switch (hash) {
-//            case 'chest' || 1:
-//                $title.text('Грудь');
-//                break;
-//            case 'arms':
-//                $title.text('Руки');
-//                break;
-//            case 'legs':
-//                $title.text('Ноги');
-//                break;
-//            case 'shoulders':
-//                $title.text('Плечи');
-//                break;
-//            case 'press':
-//                $title.text('Пресс');
-//                break;
-//            default :
-//                $title.text('Главная');
-//        }
-//    } else {
-//        $title.text(name);
-//    }
-//}
 
 // функция достает из локального хранилища данные о созданных упражнениях
 function createListExercise (name) {

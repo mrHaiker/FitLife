@@ -1,7 +1,7 @@
 $(document).ready(function(){
 
     var authorization = true;   //Проверка авторизации
-    var userData = {}, $userName;
+    var userData = {}, $userName, interval;
     var menu = JSON.parse(localStorage.getItem('menu'));
 
     if(!localStorage.getItem('userData')) {
@@ -70,32 +70,32 @@ $(document).ready(function(){
         userData.name = $userName.val();
         menu = {
            chest: {
-               globalId: 1000,
+               globalId: 100,
                name: 'Грудь',
                exercise: []
            },
            arms: {
-               globalId: 2000,
+               globalId: 200,
                name: 'Руки',
                exercise: []
            },
            legs: {
-               globalId: 3000,
+               globalId: 300,
                name: 'Ноги',
                exercise: []
            },
            back: {
-               globalId: 4000,
+               globalId: 400,
                name: 'Спина',
                exercise: []
            },
            shoulders: {
-               globalId: 5000,
+               globalId: 500,
                name: 'Плечи',
                exercise: []
            },
            press: {
-               globalId: 6000,
+               globalId: 600,
                name: 'Пресс',
                exercise: []
            }
@@ -177,18 +177,23 @@ $(document).ready(function(){
     // счетчик для упражнений
     $(document).on('click', '.btnExs', function () {
         var $contentBtn = $(this).text();
-        var $winExs = $('.exerciseTemp .window');
-        var $winExsText = $winExs.text();
-        var $winExsNum = Number($winExsText)+Number($contentBtn);
-        $winExs.text($winExsNum);
+        var $window = $('.swiper-slide-active .window');
+        var windowNum = Number($window.text());
+        windowNum += Number($contentBtn);
+        $window.text(windowNum);
     });
 
     // отслеживание изменения input[type=range]
     $(document).on('change', 'input[type=range]', function (e) {
-        var $times = $('#times');
+        var $times = $('.swiper-slide-active #times');
         $times.text($(this).val());
         console.log($(this).val());
         e.preventDefault();
     });
 
+    jQuery('.slider').range2DSlider({
+        template:'horizontal',
+        round:true,
+        onlyGridPoint:true
+    });
 });
