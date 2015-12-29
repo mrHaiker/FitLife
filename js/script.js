@@ -69,35 +69,41 @@ $(document).ready(function(){
         $userName = $('#UserName');
         userData.name = $userName.val();
         menu = {
-           100: {
+           chest: {
                globalId: 1000,
+               name: 'Грудь',
                exercise: []
            },
            arms: {
                globalId: 2000,
+               name: 'Руки',
                exercise: []
            },
            legs: {
                globalId: 3000,
+               name: 'Ноги',
                exercise: []
            },
            back: {
                globalId: 4000,
+               name: 'Спина',
                exercise: []
            },
            shoulders: {
                globalId: 5000,
+               name: 'Плечи',
                exercise: []
            },
            press: {
                globalId: 6000,
+               name: 'Пресс',
                exercise: []
            }
         };
 
         localStorage.setItem('userData', JSON.stringify(userData));
         localStorage.setItem('menu', JSON.stringify(menu));
-        userName = JSON.parse(localStorage.getItem('userData')).name;
+        $userName = JSON.parse(localStorage.getItem('userData')).name;
 
         getDataAndPastInHtml('listItems', '#view');
         $('#yourName').remove();    //удаляем окно с вопросом
@@ -165,7 +171,7 @@ $(document).ready(function(){
 
     // Переход к упражнению
     $(document).on('click', '#listExercise li', function () {
-        location.hash = $(this).attr('id');
+        location.hash += '/'+$(this).attr('id');
     });
 
     // счетчик для упражнений
