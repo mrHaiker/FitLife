@@ -16,6 +16,7 @@ $(document).ready(function(){
     //******************************** События ********************************//
     $(window).resize(function(){    // Применяет стиль при изминении высоты окна
         setMarginForAuthorization();
+        setHeightForListItems();
     });
 
     // Отслеживание изменения Hash
@@ -59,43 +60,42 @@ $(document).ready(function(){
         $userName = $('#UserName');
         userData.name = $userName.val();
         menu = {
-           chest: {
-               globalId: 100,
-               name: 'Грудь',
-               exercise: []
-           },
-           arms: {
-               globalId: 200,
-               name: 'Руки',
-               exercise: []
-           },
-           legs: {
-               globalId: 300,
-               name: 'Ноги',
-               exercise: []
-           },
-           back: {
-               globalId: 400,
-               name: 'Спина',
-               exercise: []
-           },
-           shoulders: {
-               globalId: 500,
-               name: 'Плечи',
-               exercise: []
-           },
-           press: {
-               globalId: 600,
-               name: 'Пресс',
-               exercise: []
-           }
+            chest: {
+                globalId: 100,
+                name: 'Грудь',
+                exercise: []
+            },
+            arms: {
+                globalId: 200,
+                name: 'Руки',
+                exercise: []
+            },
+            legs: {
+                globalId: 300,
+                name: 'Ноги',
+                exercise: []
+            },
+            back: {
+                globalId: 400,
+                name: 'Спина',
+                exercise: []
+            },
+            shoulders: {
+                globalId: 500,
+                name: 'Плечи',
+                exercise: []
+            },
+            press: {
+                globalId: 600,
+                name: 'Пресс',
+                exercise: []
+            }
         };
 
         localStorage.setItem('userData', JSON.stringify(userData));
         localStorage.setItem('menu', JSON.stringify(menu));
         $userName = JSON.parse(localStorage.getItem('userData')).name;
 
-        //getDataAndPastInHtml('listItems', '#view');
         $('#yourName').remove();    //удаляем окно с вопросом
         location.hash = '';
 
@@ -184,7 +184,7 @@ $(document).ready(function(){
         console.log(history);
 
         localStorage.setItem(hashArray[1], JSON.stringify(history));
-        $window.text(windowNum);
+        $window.text(windowNum).addClass('changed');
     });
 
     // отслеживание изменения input[type=range]
@@ -200,10 +200,8 @@ $(document).ready(function(){
             times: Number($(this).val())
         };
 
-        console.log(history);
-
         localStorage.setItem(hashArray[1], JSON.stringify(history));
-        $times.text($(this).val());
+        $times.text($(this).val()).addClass('changed');
     });
 
 });

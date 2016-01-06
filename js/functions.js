@@ -14,10 +14,6 @@ function getDataAndPastInHtml (name, where, callback){
     });
 }
 
-function clearElement(name) {
-    $(name).empty();
-}
-
 function getJSFile (url) {
     $.ajax({
         type: "GET",
@@ -27,13 +23,17 @@ function getJSFile (url) {
 }
 
 function setMarginForAuthorization () {
-    var WindowHeight = $(window).height();
-    var containerParam = $('#windowLogin');
-    if(WindowHeight > 400) {
-        containerParam.addClass('more');
-    } else {
-        containerParam.removeClass('more');
-    }
+    var $windowHeight = $(window).height();
+    var $containerParam = $('#windowLogin');
+
+    $windowHeight > 400 ? $containerParam.addClass('more') : $containerParam.removeClass('more');
+}
+
+function setHeightForListItems() {
+    var $windowWidth = $(window).width();
+    var $li = $('.main-group li');
+
+    $li.css('height', $windowWidth*0.32);
 }
 
 function alert(text) {
@@ -103,38 +103,44 @@ function loadPage () {
                     toDayArray = history[history.length-1];
                     lastDayArray = history[history.length-2];
 
-                    console.info(toDayArray);
-                    console.info(lastDayArray);
-
-
-                    console.log(getAvarageResult(history, 'exs1'));
+                    console.log(history);
 
                     // редактирование шаблона упражнения вставляя информацию с бд
+                    var styleForFirst = '';
                     var lot = typeof toDayArray.exs1 != "undefined" ? toDayArray.exs1.lot : typeof lastDayArray.exs1 != "undefined" ? lastDayArray.exs1.lot : 0;
                     var times = typeof toDayArray.exs1 != "undefined" ? toDayArray.exs1.times : typeof lastDayArray.exs1 != "undefined" ? lastDayArray.exs1.times : 0;
-                    $('#1 .window').text(lot);
-                    $('#1 .times').text(times);
-                    $('#1 .inpRange').attr('value', times);
-                    $('#1 .average p:first').text(getAvarageResult(history, 'exs1'));
+                    if (typeof toDayArray.exs1 != "undefined") styleForFirst = 'changed';
+                    $('#1 .window').text(lot).addClass(styleForFirst);
+                    $('#1 .times').text(times).addClass(styleForFirst);
+                    $('#1 .wrapper-exs .inputRange').append(createNewInputRange(times));
+                    $('#1 .average p:first').text(getAverageResult(history, 'exs1'));
+
+                    // изменение высоты слайдера для того что бы он не был меньшим чем высота экрана
+                    var freeWindHeight = window.innerHeight - $swiper.offset().top;
+                    if ($swiper.height() < freeWindHeight) $swiper.css('height', freeWindHeight);
+
+                    createChart(1, history);
 
                     // цикл выстраивает n кол-во шаблонов упражнения и добавляет данные с бд
                     for (var i = 2; i <= 10; i++) {
                         var obj = $(data);
+                        var styleAllItems = '';
                         var f_lot = typeof toDayArray['exs'+i] != "undefined" ? toDayArray['exs'+i].lot : typeof lastDayArray['exs'+i] != "undefined" ? lastDayArray['exs'+i].lot : 0;
                         var f_times = typeof toDayArray['exs'+i] != "undefined" ? toDayArray['exs'+i].times : typeof lastDayArray['exs'+i] != "undefined" ? lastDayArray['exs'+i].times : 0;
+                        if (typeof toDayArray['exs'+i] != "undefined") styleAllItems = 'changed';
 
                         obj.attr('id', i);
 
                         obj.css('background', getRandomColor());
                         $('.swiper-wrapper').append(obj);
 
-                        $swiper.css('height', window.innerHeight - $swiper.offset().top);
-                        $('#' + i + ' .labelExercise').text(i);
-                        $('#' + i + ' .window').text(f_lot);
-                        $('#' + i + ' .times').text(f_times);
-                        $('#' + i + ' .inpRange').attr('value', f_times);
-                        $('#' + i + ' .average p:first').text(getAvarageResult(history, 'exs'+i));
 
+                        $('#' + i + ' .labelExercise').text(i);
+                        $('#' + i + ' .window').text(f_lot).addClass(styleAllItems);
+                        $('#' + i + ' .times').text(f_times).addClass(styleAllItems);
+                        $('#' + i + ' .wrapper-exs .inputRange').append(createNewInputRange(f_times));
+                        $('#' + i + ' .average p:first').text(getAverageResult(history, 'exs'+i));
+                        createChart(i, history);
                     }
                     var mySwiper = new Swiper('.swiper-container');
                 });
@@ -142,6 +148,7 @@ function loadPage () {
         } else {    // если hash 2 уровня не число отправляем на главную
             getDataAndPastInHtml('listItems', '#view', function () {
                 $('#title').text('Главная');
+                setHeightForListItems();
             });
         }
     } else if (hashArray.length == 1 && hashArray[0] != '' && hashArray[0] != 'newUser') {    // если hash 1 уровня только одно слово
@@ -153,6 +160,7 @@ function loadPage () {
                 $view.empty();
                 getDataAndPastInHtml('listItems', '#view', function () {
                     $('#title').text('Главная');
+                    setHeightForListItems();
                 });
                 location.hash = '';
             } else {
@@ -173,6 +181,7 @@ function loadPage () {
         } else {
             getDataAndPastInHtml('listItems', '#view', function () {
                 $('#title').text('Главная');
+                setHeightForListItems();
             });
         }
     }
@@ -187,7 +196,21 @@ function getColor () {
         '#E59E1F',  //Насыщенный жёлтый
         'rgb(188,173,155)',  //true
         'rgb(57,14,83)',  //true
-        'rgb(166,4,41)'  //true
+        'rgb(166,4,41)',  //true
+        'rgb(27,192,184)',
+        'rgb(181,137,102)',
+        'rgb(110,17,99)',
+        'rgb(109,184,122)',
+        'rgb(5,81,199)',
+        'rgb(53,122,14)',
+        'rgb(113,90,162)',
+        'rgb(148,7,19)',
+        'rgb(17,71,126)',
+        'rgb(39,26,106)',
+        'rgb(26,17,41)',
+        'rgb(199,65,73)',
+        'rgb(144,0,59)',
+        'rgb(44,34,33)'
     ];
     var num = Math.floor(Math.random()*colorArray.length);
     return colorArray[num];
@@ -201,21 +224,57 @@ function getRandomColor () {
     return 'rgb('+r+','+g+','+b+')'
 }
 
-function getAvarageResult (obj, exs) {
+function getAverageResult (obj, exs) {  //history || exs1
     var lot = [];
     var sum = 0;
     for (var i = 0; i < obj.length; i++) {
         var value = obj[i];
         var result = typeof value[exs] != "undefined" ? value[exs].lot : 0;
-        lot.push(result);
-        if (lot[i] == 0) {
-            lot.splice(i,1)
-        }
+        if (result) lot.push(result);
     }
-    for (var j = 0; j<lot.length; j++) {
-        sum += lot[j];
+    for (var k = 0; k<lot.length; k++) {
+        sum += lot[k];
     }
 
-    return (sum/lot.length).toFixed(1);
+    if(lot.length) sum = (sum/lot.length).toFixed(1);
+    return sum;
 }
 
+function createNewInputRange (val) {
+    var $inp = $('<input>');
+    $inp.addClass('inpRange');
+    $inp.attr({
+        type: 'range',
+        min: 0,
+        max: 20,
+        value: val,
+        step: 1
+    });
+    return $inp;
+}
+
+function createChart(exs, obj) {
+    var exercise = 'exs'+exs;
+    var maxNum = 0;
+    var chartArray = [];
+    var $way = $('#' + exs + ' #chart');
+    var $heightChart = $('#chart').height();
+    console.log($heightChart);
+    for (var i = 0; i<obj.length; i++) {
+        var value = obj[i];
+        if( typeof value[exercise] != 'undefined') {
+            var temp = (value[exercise].lot * value[exercise].times) / 10;
+            if (temp > maxNum) maxNum = temp;
+            if (temp) chartArray.push(temp);
+        }
+    }
+    for (var j = 0; j < chartArray.length; j++) {
+        var $div = $('<div>');
+        var height = (chartArray[j]/maxNum)*$heightChart-20;
+        //$div.css('height', height);
+        $way.append($div);
+        $div.animate({
+            'height': height
+        }, 1000)
+    }
+}

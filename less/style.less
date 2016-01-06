@@ -2,6 +2,12 @@
 
 @blue: #3f7bff;
 
+@font-face {
+  font-family: ICOmoon;
+  src: url(../fonts/icomoon.ttf);
+  font-weight: normal;
+}
+
 .transition {
   transition: all .5s ease;
 }
@@ -144,7 +150,7 @@ header {
 .spinner {
   position: absolute;
   font-size: 30px;
-  color: #999;
+  color: #9f9f9f;
   top: 50%;
   left: 50%;
   margin-top: -15px;
@@ -155,6 +161,10 @@ header {
 
 .visible {
   display: block;
+}
+
+.icon-spinner2 {
+
 }
 
 //******************************** WhatName *******************************//
@@ -264,27 +274,29 @@ section {
 }
 
 #chest {
-  background: url(http://bodysportal.com/images/bodibilding/exercises/exercisesChest/svedenieVerkhnikhBlokovCrossOver.jpg) no-repeat center;
+  background: url(../img/chest.jpg) no-repeat center;
   background-size: cover;
+  -ms-background-position-y: -28px;
+  background-position-y: -28px;
 }
 #arms {
-  background: url(http://www.himko.org/uploads/upragn/ruk1000.jpg) no-repeat center;
+  background: url(../img/arms.jpg) no-repeat center;
   background-size: cover;
 }
 #legs {
-  background: url(http://rusbody.com/images/nogi3.jpg) no-repeat center;
+  background: url(../img/legs.jpg) no-repeat center;
   background-size: cover;
 }
 #back {
-  background: url(http://fixbody.ru/images/stories/bodybuilding/exercise-back/10-tyaga-shtangi-k-podborodku-stoya.jpg) no-repeat center;
+  background: url(../img/back.jpg) no-repeat center;
   background-size: cover;
 }
 #shoulders {
-  background: url(http://body-fitnes.com/uploads/posts/2012-10/1349984249_1.jpg) no-repeat center;
+  background: #fff url(../img/shoulders.jpg) no-repeat center;
   background-size: cover;
 }
 #press {
-  background: url(http://sportmashina.com/images/muzhskoj_press.jpg) no-repeat center;
+  background: url(../img/press.jpg) no-repeat center;
   background-size: cover;
 }
 
@@ -293,9 +305,13 @@ section {
 
 .wrapper {
   width: 100%;
+  padding: 0 15px;
+  .boxSizing;
   #AddExercise {
-    margin: 15px;
+    margin: 15px auto;
     height: 40px;
+    width: 100%;
+    max-width: 420px;
     background: #dedede;
     border: 1px solid #999;
     border-radius: 3px;
@@ -332,25 +348,26 @@ section {
       }
     }
   }
-}
-
-#listExercise {
-  list-style-type: none;
-  padding: 0 15px;
-  margin-top: 40px;
-  li {
-    display: block;
-    width: 100%;
-    position: relative;
-    .transition;
-    line-height: 55px;
-    text-align: center;
-    background: #ebebeb;
-    margin: 10px 0;
-    box-shadow: 0 1px 5px rgba(0,0,0,.4);
-    font-size: 18px;
+  #listExercise {
+    list-style-type: none;
+    margin-top: 40px;
+    padding: 0;
+    li {
+      display: block;
+      width: 100%;
+      max-width: 420px;
+      position: relative;
+      .transition;
+      line-height: 55px;
+      text-align: center;
+      background: #ebebeb;
+      margin: 10px auto;
+      box-shadow: 0 1px 5px rgba(0,0,0,.4);
+      font-size: 18px;
+    }
   }
 }
+
 
 //******************************** Animation ******************************//
 //*************************************************************************//
@@ -414,9 +431,12 @@ section {
 .exerciseTemp {
   margin: 0 auto;
   background: #4169E1;
-  .wrapper {
+  .wrapper-exs {
     text-align: center;
     color: #ffffff;
+    .changed {
+      opacity: 1 !important;
+    }
     #label {
       margin: 0 auto;
       width: 150px;
@@ -462,15 +482,18 @@ section {
         width: 80px;
         font-size: 20px;
         font-weight: bold;
+        opacity: .35;
         line-height: 46px;
         background: rgba(255,255,255, .15);
-
+        transition: all .2s ease;
       }
     }
     .times {
       font-size: 28px;
       font-weight: bold;
       margin-bottom: 10px;
+      opacity: .35;
+      transition: all .2s ease;
     }
     .inp-range {
       .boxSizing;
@@ -486,6 +509,9 @@ section {
       height: 7px;
       border: 1px solid #bdc3c7;
       background-color: #fff;
+      &:focus {
+        outline: none;
+      }
     }
     input[type='range']::-webkit-slider-thumb {
       -webkit-appearance: none;
@@ -509,6 +535,29 @@ section {
       height: 20px;
       border-radius: 10px;
       cursor: pointer;
+    }
+  }
+  #chart {
+    margin-top: 40px;
+    margin-bottom: 40px;
+    height: 160px;
+    padding: 0;
+    background: rgba(255,255,255,.35);
+    .boxSizing;
+    display: inline-flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    overflow: hidden;
+    div {
+      background: #fff;
+      margin: 0 2px;
+      height: 0;
+      width: 100%;
+      min-width: 4px;
+      max-width: 8px;
+      opacity: .8;
+      color: #dedede;
+      transition: all 1s ease;
     }
   }
 }
