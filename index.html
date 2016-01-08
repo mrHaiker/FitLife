@@ -21,7 +21,7 @@
   </head>
   <body>
 
-    <header>
+    <header class="hidden-md hidden-lg">
       <nav>
         <div class="col-xs-4" >
           <div class="circle" id="profile">
@@ -38,15 +38,13 @@
     </header>
     <section></section>
 
-    <section id="view"></section>
+    <section class="hidden-md hidden-lg" id="view"></section>
 
-    <div class="spinner hidden">
+    <div class="spinner hidden hidden-md hidden-lg">
       <i class="fa fa-circle-o-notch fa-spin"></i>
     </div>
 
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/lib/bootstrap.min.js"></script>
     <script src="bower_components/Swiper/dist/js/swiper.min.js"></script>
     <script src="js/functions.js"></script>

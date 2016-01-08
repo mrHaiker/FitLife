@@ -37,15 +37,20 @@ function setHeightForListItems() {
 }
 
 function alert(text) {
-    var $div = $('<div>');
-    $div.addClass('alert');
-    $div.text(text);
-    setTimeout(function () {
-        $div.appendTo('body').fadeIn(1000);
-    },300);
-    setTimeout(function () {
-        $div.fadeOut(2000)
-    },1800);
+    if ($(window).width() < 992) {
+        var $div = $('<div>');
+        $div.addClass('alert hidden-md hidden-lg');
+        $div.text(text);
+        setTimeout(function () {
+            $div.appendTo('body').fadeIn(1000);
+        },300);
+        setTimeout(function () {
+            $div.fadeOut(2000)
+        },1800);
+        setTimeout(function () {
+            $div.remove();
+        }, 3800)
+    }
 }
 
 function valid(param, type) {
@@ -232,8 +237,8 @@ function getAverageResult (obj, exs) {  //history || exs1
         var result = typeof value[exs] != "undefined" ? value[exs].lot : 0;
         if (result) lot.push(result);
     }
-    for (var k = 0; k<lot.length; k++) {
-        sum += lot[k];
+    for (var j = 0; j<lot.length; j++) {
+        sum += lot[j];
     }
 
     if(lot.length) sum = (sum/lot.length).toFixed(1);
@@ -259,7 +264,6 @@ function createChart(exs, obj) {
     var chartArray = [];
     var $way = $('#' + exs + ' #chart');
     var $heightChart = $('#chart').height();
-    console.log($heightChart);
     for (var i = 0; i<obj.length; i++) {
         var value = obj[i];
         if( typeof value[exercise] != 'undefined') {
@@ -276,5 +280,24 @@ function createChart(exs, obj) {
         $div.animate({
             'height': height
         }, 1000)
+    }
+}
+
+function checkWidthScreen() {
+    var $windowWidth = $(window).width();
+    var $message = $('.large-screen');
+    if($windowWidth >= 992) {
+        if (!$message.hasClass('large-screen')) {
+            $message = $('<div>').addClass('large-screen hidden-xs hidden-sm')
+                .append($('<p>').text('Данное приложение расчитано для мобильных устройств, а это сообщенеи появилось так как ширина вашего разширения больше допустимого!'))
+                .append($('<p>').text('Что можно сделать?'))
+                    .append($('<ul>')
+                        .append($('<li>').text('Прежде всего можно зайти с мобильного телефона на этот сайт;'))
+                        .append($('<li>').text('Или просто выставить Ваш браузер в режиме окна, и уменьшить его ширину;')));
+
+            $('body').append($message);
+        }
+    } else {
+        $message.remove();
     }
 }

@@ -9,6 +9,7 @@ $(document).ready(function(){
         location.hash = 'newUser';
     } else {
         loadPage();
+        checkWidthScreen();
         $userName = JSON.parse(localStorage.getItem('userData')).name;
         alert('Приветсвую Вас, '+$userName+'!');
     }
@@ -17,6 +18,7 @@ $(document).ready(function(){
     $(window).resize(function(){    // Применяет стиль при изминении высоты окна
         setMarginForAuthorization();
         setHeightForListItems();
+        checkWidthScreen();
     });
 
     // Отслеживание изменения Hash

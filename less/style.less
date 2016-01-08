@@ -2,12 +2,6 @@
 
 @blue: #3f7bff;
 
-@font-face {
-  font-family: ICOmoon;
-  src: url(../fonts/icomoon.ttf);
-  font-weight: normal;
-}
-
 .transition {
   transition: all .5s ease;
 }
@@ -18,11 +12,54 @@ body {
   margin: 0;
   font-family: 'Roboto', sans-serif;
   transition: all 1s ease;
-  @media screen and (min-width: 992px) {
-    display: none;
+  //@media screen and (min-width: 992px) {
+  //  display: none;
+  //}
+}
+
+.hidden-xs {
+  @media screen and (max-width: 767px) {
+    display: none !important;
+  }
+}
+.hidden-sm {
+  @media screen and (min-width: 768px) and (max-width: 991px) {
+    display: none !important;
+  }
+}
+.hidden-md {
+  @media screen and (min-width: 992px) and (max-width: 1199px) {
+    display: none !important;
   }
 }
 
+.hidden-lg {
+  @media screen and (min-width: 1200px) {
+    display: none !important;
+  }
+}
+
+.visible-xs {
+  @media screen and (max-width: 767px) {
+    display: block !important;
+  }
+}
+.visible-sm {
+  @media screen and (min-width: 768px) and (max-width: 991px) {
+    display: block !important;
+  }
+}
+.visible-md {
+  @media screen and (min-width: 992px) and (max-width: 1199px) {
+    display: block !important;
+  }
+}
+
+.visible-lg {
+  @media screen and (min-width: 1200px) {
+    display: block !important;
+  }
+}
 
 .boxSizing {
   box-sizing: border-box;
@@ -564,4 +601,20 @@ section {
 
 .swiper-container {
   width: 100%;
+}
+
+//****************************** Large message ****************************//
+//*************************************************************************//
+
+.large-screen {
+  width: 500px;
+  background: #E6E6E6;
+  border: 1px solid #f9f9f9;
+  box-shadow: 0 0 24px rgba(0,0,0,.5);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -120px;
+  margin-left: -250px;
+  padding: 10px;
 }
