@@ -80,13 +80,10 @@ function loadPage () {
             getDataAndPastInHtml('exerciseWrapper', '#view', function () {
                 // Запрос шаблона приложения и обработка данных с бд
                 getDataAndPastInHtml('exercise', '.swiper-wrapper', function (data) {
-                    var $swiper = $('.swiper-container');
                     var history = JSON.parse(localStorage.getItem(hashArray[1]));
                     var date = new Date();
                     var toDay = date.getFullYear()+'/'+(date.getMonth()+1)+'/'+date.getDate();
-                    var toDayArray, lastDayArray;
                     if (!history) {     // если объекта еще не существует (первая инициализация) => создаем новый объект
-                        console.info('I create new object');
                         var nOb = [
                             {
                                 date: '2010/01/01'  // для корректной работы конструктора упражнений
@@ -105,49 +102,10 @@ function loadPage () {
                         localStorage.setItem(hashArray[1], JSON.stringify(history));
                     }
 
-                    toDayArray = history[history.length-1];
-                    lastDayArray = history[history.length-2];
-
-                    console.log(history);
-
                     // редактирование шаблона упражнения вставляя информацию с бд
-                    var styleForFirst = '';
-                    var lot = typeof toDayArray.exs1 != "undefined" ? toDayArray.exs1.lot : typeof lastDayArray.exs1 != "undefined" ? lastDayArray.exs1.lot : 0;
-                    var times = typeof toDayArray.exs1 != "undefined" ? toDayArray.exs1.times : typeof lastDayArray.exs1 != "undefined" ? lastDayArray.exs1.times : 0;
-                    if (typeof toDayArray.exs1 != "undefined") styleForFirst = 'changed';
-                    $('#1 .window').text(lot).addClass(styleForFirst);
-                    $('#1 .times').text(times).addClass(styleForFirst);
-                    $('#1 .wrapper-exs .inputRange').append(createNewInputRange(times));
-                    $('#1 .average p:first').text(getAverageResult(history, 'exs1'));
+                    fillingExercisePage(history, data);
 
-                    // изменение высоты слайдера для того что бы он не был меньшим чем высота экрана
-                    var freeWindHeight = window.innerHeight - $swiper.offset().top;
-                    if ($swiper.height() < freeWindHeight) $swiper.css('height', freeWindHeight);
-
-                    createChart(1, history);
-
-                    // цикл выстраивает n кол-во шаблонов упражнения и добавляет данные с бд
-                    for (var i = 2; i <= 10; i++) {
-                        var obj = $(data);
-                        var styleAllItems = '';
-                        var f_lot = typeof toDayArray['exs'+i] != "undefined" ? toDayArray['exs'+i].lot : typeof lastDayArray['exs'+i] != "undefined" ? lastDayArray['exs'+i].lot : 0;
-                        var f_times = typeof toDayArray['exs'+i] != "undefined" ? toDayArray['exs'+i].times : typeof lastDayArray['exs'+i] != "undefined" ? lastDayArray['exs'+i].times : 0;
-                        if (typeof toDayArray['exs'+i] != "undefined") styleAllItems = 'changed';
-
-                        obj.attr('id', i);
-
-                        obj.css('background', getRandomColor());
-                        $('.swiper-wrapper').append(obj);
-
-
-                        $('#' + i + ' .labelExercise').text(i);
-                        $('#' + i + ' .window').text(f_lot).addClass(styleAllItems);
-                        $('#' + i + ' .times').text(f_times).addClass(styleAllItems);
-                        $('#' + i + ' .wrapper-exs .inputRange').append(createNewInputRange(f_times));
-                        $('#' + i + ' .average p:first').text(getAverageResult(history, 'exs'+i));
-                        createChart(i, history);
-                    }
-                    var mySwiper = new Swiper('.swiper-container');
+                    var mySwiper = new Swiper('.swiper-container'); // инициализируем плагин swiper
                 });
             });
         } else {    // если hash 2 уровня не число отправляем на главную
@@ -189,6 +147,52 @@ function loadPage () {
                 setHeightForListItems();
             });
         }
+    }
+}
+
+// Функция наполняет шаблон с упражнениеями (data) данными с истории (history)
+function fillingExercisePage(history, data) {
+    var styleForFirst = '';
+    var $swiper = $('.swiper-container');
+    var toDayArray = history[history.length-1];
+    var lastDayArray = history[history.length-2];
+    var lot = typeof toDayArray.exs1 != "undefined" ? toDayArray.exs1.lot : typeof lastDayArray.exs1 != "undefined" ? lastDayArray.exs1.lot : 0;
+    var times = typeof toDayArray.exs1 != "undefined" ? toDayArray.exs1.times : typeof lastDayArray.exs1 != "undefined" ? lastDayArray.exs1.times : 0;
+
+    // изменение высоты слайдера для того что бы он не был меньшим чем высота экрана
+    var freeWindHeight = window.innerHeight - $swiper.offset().top;
+    if ($swiper.height() < freeWindHeight) $swiper.css('height', freeWindHeight);
+
+    if (typeof toDayArray.exs1 != "undefined") styleForFirst = 'changed';
+
+    $('#1 .window').text(lot).addClass(styleForFirst);
+    $('#1 .times').text(times).addClass(styleForFirst);
+    $('#1 .wrapper-exs .range-wrapper').append(createNewInputRange(times));
+    $('#1 .average p:first').text(getAverageResult(history, 'exs1'));
+    $('#1 .left-ellipsis').css('display', 'none');
+
+    createChart(1, history);
+
+    // цикл выстраивает n кол-во шаблонов упражнения и добавляет данные с бд
+    for (var i = 2; i <= 10; i++) {
+        var obj = $(data);
+        var styleAllItems = '';
+        var f_lot = typeof toDayArray['exs'+i] != "undefined" ? toDayArray['exs'+i].lot : typeof lastDayArray['exs'+i] != "undefined" ? lastDayArray['exs'+i].lot : 0;
+        var f_times = typeof toDayArray['exs'+i] != "undefined" ? toDayArray['exs'+i].times : typeof lastDayArray['exs'+i] != "undefined" ? lastDayArray['exs'+i].times : 0;
+        if (typeof toDayArray['exs'+i] != "undefined") styleAllItems = 'changed';
+
+        obj.attr('id', i);
+
+        obj.css('background', getRandomColor());
+        $('.swiper-wrapper').append(obj);
+
+        $('#' + i + ' .labelExercise').text(i);
+        $('#' + i + ' .window').text(f_lot).addClass(styleAllItems);
+        $('#' + i + ' .times').text(f_times).addClass(styleAllItems);
+        $('#' + i + ' .wrapper-exs .range-wrapper').append(createNewInputRange(f_times));
+        $('#' + i + ' .average p:first').text(getAverageResult(history, 'exs'+i));
+        if (i == 10) $('#' + i + ' .right-ellipsis').css('display', 'none');
+        createChart(i, history);
     }
 }
 
@@ -247,7 +251,6 @@ function getAverageResult (obj, exs) {  //history || exs1
 
 function createNewInputRange (val) {
     var $inp = $('<input>');
-    $inp.addClass('inpRange');
     $inp.attr({
         type: 'range',
         min: 0,
@@ -275,7 +278,6 @@ function createChart(exs, obj) {
     for (var j = 0; j < chartArray.length; j++) {
         var $div = $('<div>');
         var height = (chartArray[j]/maxNum)*$heightChart-20;
-        //$div.css('height', height);
         $way.append($div);
         $div.animate({
             'height': height
@@ -293,7 +295,7 @@ function checkWidthScreen() {
                 .append($('<p>').text('Что можно сделать?'))
                     .append($('<ul>')
                         .append($('<li>').text('Прежде всего можно зайти с мобильного телефона на этот сайт;'))
-                        .append($('<li>').text('Или просто выставить Ваш браузер в режиме окна, и уменьшить его ширину;')));
+                        .append($('<li>').text('Можно выставить Ваш браузер в режиме окна, и уменьшить его ширину;')));
 
             $('body').append($message);
         }
