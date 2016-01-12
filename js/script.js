@@ -7,6 +7,7 @@ $(document).ready(function(){
         // Если не задано имя и нет никаких данных на локальной машине
         // необходимо спросить имя и создать первую запись
         location.hash = 'newUser';
+        checkWidthScreen();
     } else {
         loadPage();
         checkWidthScreen();
